@@ -9,6 +9,6 @@ router.get('/', (req, res) => {
 })
 
 app.use(express.json())
-app.use('/', router)
+app.use('/.netlify/functions/api', router)
 
 module.exports.handler = serverless(app)
