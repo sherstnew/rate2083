@@ -17,7 +17,6 @@ router.post('/', (req, res) => {
     .catch(function (error) {
       console.log(error);
     });
-    res.send('ok');
 })
 
 app.use(express.json())
