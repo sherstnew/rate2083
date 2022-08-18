@@ -2,7 +2,8 @@
   "dependencies": {
     "express": "^4.18.1",
     "netlify-lambda": "^2.0.15",
-    "serverless-http": "^3.0.2"
+    "serverless-http": "^3.0.2",
+    "sqlite3": "^5.0.11"
   },
   "scripts": {
     "start": "netlify-lambda serve src",
@@ -11,7 +12,6 @@
   "name": "rate2083",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sherstnew/rate2083.git"
