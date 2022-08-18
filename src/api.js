@@ -6,7 +6,7 @@ const app = express()
 const router = express.Router()
 
 
-router.post('/handler', (req, res) => {
+router.post('/', (req, res) => {
     data = req.body
     axios.post('https://inv2083server.sherstnew.repl.co', {
       query: 'SELECT * FROM teachers',
