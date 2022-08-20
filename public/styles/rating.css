@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Vinnytsia';
+    src: url('/fonts/VinnytsiaSansReg.ttf');
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    overflow: hidden;
+    font-family: 'Vinnytsia', sans-serif;
+}
+ul {
+    list-style-type: none;
+}
+
+.container {
+    display: flex;
+}
+
+.top-list {
+  
+}
+.top-item {
+  
+}

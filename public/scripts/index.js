@@ -6,14 +6,13 @@ const change_btn = document.querySelector('.change-btn')
 const like_btn = document.querySelector('.uil-thumbs-up')
 let trand = 0
 let teacher = {}
-let localst = ''
 let likes = ''
+let liked = false
 let teachers = []
 
 const change = () => {
     const req = new XMLHttpRequest()
     
-
     req.open('POST', '/api', true)
     let body = {
       q: "teachers"
@@ -26,6 +25,14 @@ const change = () => {
         teachers = JSON.parse(req.response)
         trand = Math.floor(Math.random() * teachers.length)
         teacher = teachers[trand]
+        
+        if (localStorage.getItem(teacher.name) == 'true') {
+            like_btn.style.color = '#e63946'
+        } else {
+            like_btn.style.color = 'black'
+        }
+              
+        likes = teacher.likes
         tphoto.style.backgroundImage = "url('" + teacher.photo + "')"
         tname.innerHTML = teacher.name
         tjob.innerHTML = teacher.job
@@ -39,18 +46,45 @@ change()
 change_btn.addEventListener('click', change)
 
 like_btn.addEventListener('click', () => {
-    likes++
-    const req_like = new XMLHttpRequest()
-    req_like.open('POST', '/api', true)
-    let body = {
-      name: "",
-      likes: 0,
-      q: "like"
+    if (localStorage.getItem(teacher.name) != 'true') {
+        likes += 1
+        const req_like = new XMLHttpRequest()
+        req_like.open('POST', '/api', true)
+        let body = {
+          name: "",
+          likes: 0,
+          q: "like"
+        }
+        body.name = teacher.name
+        body.likes = likes
+        body = JSON.stringify(body)
+        req_like.setRequestHeader('Content-Type', 'application/json')
+        req_like.send(body)
+      
+        tlikes.innerHTML = likes
+        like_btn.style.transform = 'rotate(360deg)'
+        like_btn.style.color = '#e63946'
+        localStorage.setItem(teacher.name, 'true')
+        setTimeout(change, 100)
+    } else if (localStorage.getItem(teacher.name) == 'true'){
+        likes -= 1
+        const req_like = new XMLHttpRequest()
+        req_like.open('POST', '/api', true)
+        let body = {
+          name: "",
+          likes: 0,
+          q: "like"
+        }
+        body.name = teacher.name
+        body.likes = likes
+        body = JSON.stringify(body)
+        req_like.setRequestHeader('Content-Type', 'application/json')
+        req_like.send(body)
+
+        tlikes.innerHTML = likes
+        like_btn.style.transform = 'rotate(-360deg)'
+        like_btn.style.color = 'black'
+        localStorage.removeItem(teacher.name)
+        setTimeout(change, 100)
     }
-    body.name = teacher.name
-    body.likes = likes
-    body = JSON.stringify(body)
-    req_like.setRequestHeader('Content-Type', 'application/json')
-    req_like.send(body)
-    change()
 })

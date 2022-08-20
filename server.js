@@ -1,11 +1,12 @@
+const { Sequelize, QueryTypes } = require('sequelize');
 const express = require('express')
-const sqlite3 = require('sqlite3')
 
 const app = express()
-let data = ''
-let randid = 0
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'teachers.db'
+});
 let sel = []
-let db
 
 app.use(express.json())
 app.use(express.static('public'))
@@ -15,40 +16,30 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
     res.sendFile('/home/runner/rate2083/public/pages/index.html')
 })
+app.get('/rating', (req, res) => {
+    res.sendFile('/home/runner/rate2083/public/pages/rating.html')
+})
 app.post('/api', (req, res) => {
     q = req.body.q
     if (q == 'teachers') {
-        db = new sqlite3.Database('teachers.db')
-        db.serialize(async () => {
-          sel = await query('SELECT * FROM teachers')
-        })
-        db.close()
-        res.send(sel)
+        getTeachers(res)
     } else if (q == 'like') {
-        db = new sqlite3.Database('teachers.db')
         let name = req.body.name
         let likes = req.body.likes
-        db.serialize(() => {
-            let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name="' + name + '"'
-            db.run(update)
-            
-        })
-        db.close()
+        let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name = "' + name + '"'
+        sequelize.query(update, {logging: false});
         res.send('ok')
+    } else if (q == 'rating') {
+        sortTeachers(res)
     }
 })
 
-const query = (command, method = 'all') => {
-  return new Promise((resolve, reject) => {
-    db[method](command, (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
-
-
+const getTeachers = async (res) => {
+      sel = await sequelize.query("SELECT * FROM teachers", { type: QueryTypes.SELECT, logging: false })
+      res.send(JSON.stringify(sel));
+}
+const sortTeachers = async (res) => {
+      sel = await sequelize.query("SELECT * FROM teachers ORDER BY likes DESC LIMIT 10", { type: QueryTypes.SELECT, logging: false })
+      res.send(JSON.stringify(sel));
+}
 app.listen()
