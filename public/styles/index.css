@@ -30,10 +30,11 @@ body {
 }
 .content {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     width: 100vw;
-    flex: 2;
+    flex: 3;
 }
 .footer {
     width: 100vw;
@@ -59,8 +60,8 @@ body {
     justify-content: space-evenly;
     width: 700px;
     height: 400px;
-    border-radius: 20px;
-    background: #e8ecf0;
+    border-radius: 10px;
+    background: #f8f9fa;
     color: #000;
 }
 .card-photo {
@@ -103,4 +104,25 @@ body {
     cursor: pointer;
     margin-left: 20px;
     font-size: 40px;
+}
+
+/* change-btn */
+
+.change-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 75px;
+  border-radius: 10px;
+  background: #f8f9fa;
+  font-size: 25px;
+  color: #000;
+  transition: 1s;
+  cursor: pointer;
+  user-select: none;
+}
+.change-btn:hover {
+  transition: 1s;
+  background: #ffffff;
 }
