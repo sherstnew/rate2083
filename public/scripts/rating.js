@@ -15,6 +15,7 @@ req.onload = () => {
     rating = JSON.parse(req.response)
     rating.forEach(el => {
         counter++
-        top_list.innerHTML += `<li class="top-item">${counter} ${el.likes} лайков ${el.name} (${el.job})</li>`
+        top_list.innerHTML += `<li class="top-item"><span class="counter">${counter}</span>
+        ${el.name} (${el.job}) <div class="likes">${el.likes} <i class="uil uil-thumbs-up"></div></i></li>`
     })
 }

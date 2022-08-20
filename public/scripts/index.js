@@ -11,6 +11,7 @@ let liked = false
 let teachers = []
 
 const change = () => {
+    like_btn.style.animation = 'none'
     const req = new XMLHttpRequest()
     
     req.open('POST', '/api', true)
@@ -62,10 +63,9 @@ like_btn.addEventListener('click', () => {
         req_like.send(body)
       
         tlikes.innerHTML = likes
-        like_btn.style.transform = 'rotate(360deg)'
-        like_btn.style.color = '#e63946'
+        like_btn.style.animation = 'like 0.5s'
         localStorage.setItem(teacher.name, 'true')
-        setTimeout(change, 100)
+        setTimeout(change, 500)
     } else if (localStorage.getItem(teacher.name) == 'true'){
         likes -= 1
         const req_like = new XMLHttpRequest()
@@ -82,9 +82,9 @@ like_btn.addEventListener('click', () => {
         req_like.send(body)
 
         tlikes.innerHTML = likes
-        like_btn.style.transform = 'rotate(-360deg)'
-        like_btn.style.color = 'black'
+        like_btn.style.animation = 'dislike 0.5s'
+        like_btn.style.color = '#000'
         localStorage.removeItem(teacher.name)
-        setTimeout(change, 100)
+        setTimeout(change, 500)
     }
 })

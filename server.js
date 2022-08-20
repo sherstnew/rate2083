@@ -42,4 +42,4 @@ const sortTeachers = async (res) => {
       sel = await sequelize.query("SELECT * FROM teachers ORDER BY likes DESC LIMIT 10", { type: QueryTypes.SELECT, logging: false })
       res.send(JSON.stringify(sel));
 }
-app.listen()
+app.listen(3000)

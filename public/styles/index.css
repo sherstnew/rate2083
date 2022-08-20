@@ -2,6 +2,14 @@
     font-family: 'Vinnytsia';
     src: url('/fonts/VinnytsiaSansReg.ttf');
 }
+@keyframes like {
+    0% {transform: rotate(0deg); color: #000}
+    100% {transform: rotate(360deg); color: #e63946}
+}
+@keyframes dislike {
+    0% {transform: rotate(0deg); color: #e63946}
+    100% {transform: rotate(-360deg); color: #000}
+}
 * {
     margin: 0;
     padding: 0;
@@ -104,7 +112,7 @@ body {
     cursor: pointer;
     margin-left: 20px;
     font-size: 40px;
-    transition: 0.5s;
+    animation: none;
 }
 
 /* change-btn */
@@ -126,4 +134,60 @@ body {
 .change-btn:hover {
   transition: 1s;
   background: #ffffff;
+}
+.footer {
+    display: flex;
+    align-items: end;
+    padding: 0px 0px 20px 20px;
+}
+.foot-alert {
+    color: #adb5bd;
+}
+
+@media screen and (max-width: 1200px){
+    body {
+        overflow-y: scroll;
+    }
+    .container {
+        height: inherit;
+    }
+    .head {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 20px;
+        height: 100px;
+        width: 80vw;
+    }
+    .head-header {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    .cont-card {
+        width: 500px;
+        flex-wrap: wrap;
+        background: none;
+        margin-top: 20px;
+    }
+    .card-photo {
+        width: 190px;
+        height: 280px;
+        margin-bottom: 20px;
+    }
+    .card-right {
+        height: 250px;
+        padding: 0;
+    }
+    .card-rating {
+        display: flex;
+        justify-content: end;
+        height: 100px;
+    }
+    .change-btn {
+        width: 200px;
+        margin: 60px 100px 0px 0px;
+    }
+    .footer {
+        margin-top: 40px;
+    }
 }
