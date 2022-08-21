@@ -64,6 +64,7 @@ like_btn.addEventListener('click', () => {
       
         tlikes.innerHTML = likes
         like_btn.style.animation = 'like 0.5s'
+        like_btn.style.color = '#e63946'
         localStorage.setItem(teacher.name, 'true')
         setTimeout(change, 500)
     } else if (localStorage.getItem(teacher.name) == 'true'){
