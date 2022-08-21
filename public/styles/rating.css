@@ -24,6 +24,7 @@ ul {
     justify-content: center;
     align-items: center;
     width: 100vw;
+    height: 98vh;
 }
 
 .header-container {
@@ -40,11 +41,11 @@ ul {
 .header-desc {
     font-size: 20px;
 }
-.top-container {
+.rating-container {
     flex: 5;
 }
 
-.top-item {
+.rating-item {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -54,12 +55,15 @@ ul {
     border-radius: 10px;
     font-size: 25px;
     margin-top: 20px;
+    animation: none;
 }
 .counter {
     margin: 0px 20px 0px 30px;
     font-size: 30px;
 }
 .uil.uil-thumbs-up {
+    cursor: pointer;
+    color: #000;
     margin-left: 10px;
     font-size: 30px;
 }
@@ -101,13 +105,13 @@ ul {
     .header-home {
         height: 100px;
     }
-    .top-item {
+    .rating-item {
         margin-top: 50px;
         width: 325px;
         height: 200px;
         font-size: 20px;
     }
-    .top-container {
+    .rating-container {
         display: flex;
         justify-content: center;
     }

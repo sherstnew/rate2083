@@ -18,6 +18,10 @@ body {
     overflow: hidden;
     font-family: 'Vinnytsia', sans-serif;
 }
+a {
+    color: black;
+    text-decoration: none;
+}
 
 /* containers */
 
@@ -49,7 +53,7 @@ body {
     flex: 1;
 }
 
-/* elements */
+/*header */
 
 .head-header {
     color: #000;
@@ -57,7 +61,67 @@ body {
 }
 .uil.uil-trophy {
     color: black;
-    font-size: 60px;
+    font-size: 50px;
+}
+
+/* search */
+
+.search-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 90px;
+}
+.search {
+    width: 300px;
+    height: 70px;
+    border-radius: 10px;
+    background: #f8f9fa;
+    border: none;
+    outline: none;
+    padding: 0px 20px 0px 20px;
+    font-family: 'Vinnytsia', sans-serif;
+    font-size: 20px;
+}
+.search::placeholder {
+    font-size: 20px;
+    font-family: 'Vinnytsia', sans-serif;
+}
+.uil.uil-search {
+    cursor: pointer;
+    font-size: 30px;
+}
+.search-variants {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    margin-bottom: 20px;
+}
+.search-variant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background: #ffffff;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 20px;
+    cursor: pointer;
+    user-select: none;
+    font-family: 'Vinnytsia', sans-serif;
+    transition: 1s;
+    border-radius: 10px;
+}
+.search-error {
+    width: 200px;
+    height: 18px;
+    margin-top: 20px;
+    font-size: 18px;
 }
 
 /* card */
@@ -71,6 +135,7 @@ body {
     border-radius: 10px;
     background: #f8f9fa;
     color: #000;
+    margin-top: 30px;
 }
 .card-photo {
     width: 200px;
@@ -104,7 +169,6 @@ body {
     flex-wrap: wrap;
     height: 50px;
 }
-
 .rating-counter {
     font-size: 40px;
 }
@@ -147,27 +211,52 @@ body {
 @media screen and (max-width: 1200px){
     body {
         overflow-y: scroll;
+        overflow-x: hidden;
     }
     .container {
         height: inherit;
     }
     .head {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
         margin-top: 20px;
         height: 100px;
         width: 80vw;
     }
     .head-header {
+        display: flex;
+        align-items: center;
         text-align: center;
         font-size: 30px;
         margin-bottom: 20px;
+        width: 100vw;
+        height: 70px;
+    }
+    .head-rating {
+        margin-top: -20px;
+    }
+    .uil.uil-trophy {
+        font-size: 40px;
+    }
+    .search {
+        width: 200px;
+    }
+    .search-variants {
+        display: flex;
+        flex-wrap: wrap;
+        width: 90vw;
+        height: 10px;
+        margin-top: -20px;
+    }
+    .search-variant {
+        margin-left: 0px;
     }
     .cont-card {
-        width: 500px;
+        width: 100vw;
         flex-wrap: wrap;
         background: none;
-        margin-top: 20px;
+        margin-top: 50px;
     }
     .card-photo {
         width: 190px;
@@ -175,7 +264,6 @@ body {
         margin-bottom: 20px;
     }
     .card-right {
-        height: 250px;
         padding: 0;
     }
     .card-rating {
@@ -185,7 +273,7 @@ body {
     }
     .change-btn {
         width: 200px;
-        margin: 60px 100px 0px 0px;
+        margin: 90px 100px 0px 0px;
     }
     .footer {
         margin-top: 40px;

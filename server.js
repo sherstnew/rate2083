@@ -31,15 +31,22 @@ app.post('/api', (req, res) => {
         res.send('ok')
     } else if (q == 'rating') {
         sortTeachers(res)
+    } else if (q == 'search') {
+        let select = 'SELECT * FROM teachers WHERE name LIKE "%' + req.body.sq + '%"'
+        searchTeacher(res, select)
     }
 })
 
 const getTeachers = async (res) => {
-      sel = await sequelize.query("SELECT * FROM teachers", { type: QueryTypes.SELECT, logging: false })
-      res.send(JSON.stringify(sel));
+    sel = await sequelize.query("SELECT * FROM teachers", { type: QueryTypes.SELECT, logging: false })
+    res.send(JSON.stringify(sel));
 }
 const sortTeachers = async (res) => {
-      sel = await sequelize.query("SELECT * FROM teachers ORDER BY likes DESC LIMIT 10", { type: QueryTypes.SELECT, logging: false })
-      res.send(JSON.stringify(sel));
+    sel = await sequelize.query("SELECT * FROM teachers ORDER BY likes DESC LIMIT 10", { type: QueryTypes.SELECT, logging: false })
+    res.send(JSON.stringify(sel));
+}
+const searchTeacher = async (res, select) => {
+    sel = await sequelize.query(select, { type: QueryTypes.SELECT, logging: false })
+    res.send(JSON.stringify(sel));
 }
 app.listen(3000)
