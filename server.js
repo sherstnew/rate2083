@@ -49,4 +49,4 @@ const searchTeacher = async (res, select) => {
     sel = await sequelize.query(select, { type: QueryTypes.SELECT, logging: false })
     res.send(JSON.stringify(sel));
 }
-app.listen(3000)
+app.listen(2083)
