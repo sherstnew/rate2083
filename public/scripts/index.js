@@ -91,7 +91,6 @@ const f_search = () => {
                         variant.classList.add('search-variant')
                         variant.innerHTML = i
                         search_var.append(variant)
-                        console.log(variant);
 
                         s_last = search_var.childNodes[s_current]
 
