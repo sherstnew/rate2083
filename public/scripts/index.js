@@ -86,10 +86,13 @@ const f_search = () => {
                     teacher = s_teachers[s_current]
                     renderTeacher(teacher)
                     for (let i = 1; i < s_teachers.length + 1; i++) {
-                        const variant = document.createElement('button')
+                        const variant = document.createElement('div')                 
+                        
                         variant.classList.add('search-variant')
                         variant.innerHTML = i
                         search_var.append(variant)
+                        console.log(variant);
+
                         s_last = search_var.childNodes[s_current]
 
                         if (i == s_current + 1) {
