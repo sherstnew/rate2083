@@ -210,9 +210,3 @@ const renderTeacher = (teacher) => {
         tlikes.innerHTML = 0
     }
 }
-
-document.addEventListener('keydown', function(event) {
-    if (event.code == 'Enter' && search.value != '') {
-        f_search()
-    }
-    })
