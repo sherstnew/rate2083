@@ -9,7 +9,7 @@ const search_btn = document.querySelector('.uil-search')
 const search_error = document.querySelector('.search-error')
 const search_var = document.querySelector('.search-variants')
 
-let trand = 0
+let tcount = 0
 let teacher = {}
 let teachers = []
 let s_teachers = []
@@ -19,8 +19,14 @@ let s_current = 0
 let s_last = 0
 let likes = ''
 let el_array = []
+let a_mode = false
 
 const change = () => {
+    if (a_mode == true) {
+        change_btn.innerHTML = 'Следующий'
+        a_mode = false
+        tcount = 0
+    }
     s_mode = false
     while (search_var.firstChild) {
         search_var.removeChild(search_var.firstChild);
@@ -38,9 +44,13 @@ const change = () => {
     
     req.onload = () => {
         teachers = JSON.parse(req.response)
-        trand = Math.floor(Math.random() * teachers.length)
-        teacher = teachers[trand]
-        renderTeacher(teacher)
+        if (tcount >= teachers.length) {
+            renderTeacher('all')
+        } else {
+            teacher = teachers[tcount]
+            tcount++
+            renderTeacher(teacher)
+        }
     }
 }
 
@@ -119,7 +129,7 @@ const f_search = () => {
 }
 
 like_btn.addEventListener('click', () => {
-    if (localStorage.getItem(teacher.name) != 'true') {
+    if (localStorage.getItem(teacher.name) != 'true' && a_mode == false) {
         likes += 1
         const req_like = new XMLHttpRequest()
         req_like.open('POST', '/api', true)
@@ -143,7 +153,7 @@ like_btn.addEventListener('click', () => {
         } else {
             setTimeout(f_search, 500)
         }
-    } else if (localStorage.getItem(teacher.name) == 'true'){
+    } else if (localStorage.getItem(teacher.name) == 'true' && a_mode == false){
         likes -= 1
         const req_like = new XMLHttpRequest()
         req_like.open('POST', '/api', true)
@@ -174,18 +184,31 @@ search_btn.addEventListener('click', f_search)
 
 const renderTeacher = (teacher) => {
 
-    if (localStorage.getItem(teacher.name) == 'true') {
-        like_btn.style.color = '#e63946'
-    } else {
-        like_btn.style.color = 'black'
-    }
+    if (teacher != 'all') {
 
-    search_error.innerHTML = ' '
-    likes = teacher.likes
-    tphoto.style.backgroundImage = "url('" + teacher.photo + "')"
-    tname.innerHTML = teacher.name
-    tjob.innerHTML = teacher.job
-    tlikes.innerHTML = teacher.likes
+        if (localStorage.getItem(teacher.name) == 'true') {
+            like_btn.style.color = '#e63946'
+        } else {
+            like_btn.style.color = 'black'
+        }
+
+        search_error.innerHTML = ' '
+        likes = teacher.likes
+        tphoto.style.backgroundImage = "url('" + teacher.photo + "')"
+        tname.innerHTML = teacher.name
+        tjob.innerHTML = teacher.job
+        tlikes.innerHTML = teacher.likes
+
+    } else {
+        a_mode = true
+        search_error.innerHTML = ' '
+        likes = 0
+        tphoto.style.backgroundImage = "url('img/allphoto.png')"
+        tname.innerHTML = 'Все!'
+        tjob.innerHTML = 'Вы просмотрели всех учителей, спасибо!'
+        change_btn.innerHTML = 'Заново'
+        tlikes.innerHTML = 0
+    }
 }
 
 document.addEventListener('keydown', function(event) {
