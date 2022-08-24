@@ -79,6 +79,9 @@ change()
 change_btn.addEventListener('click', change)
 
 const f_search = () => {
+    localStorage.setItem('h_mode', 'true')
+    change_btn.innerHTML = 'Следующий'
+    like_btn.style.opacity = '1'
     s_query = ''
     if (search.value != '' ) { 
         s_query = ''  
@@ -95,8 +98,8 @@ const f_search = () => {
         const s_req = new XMLHttpRequest()
         s_req.open('POST', '/api', true)
         let body = {
-          q: "search",
-          sq: ""
+        q: "search",
+        sq: ""
         }
         body.sq = s_query
         body = JSON.stringify(body)
