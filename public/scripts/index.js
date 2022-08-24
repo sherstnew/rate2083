@@ -21,35 +21,55 @@ let likes = ''
 let el_array = []
 let a_mode = false
 
+if (localStorage.getItem('tcount') == null) {
+    localStorage.setItem('tcount', tcount)
+}
+
 const change = () => {
-    if (a_mode == true) {
+    if (a_mode) {
         change_btn.innerHTML = 'Следующий'
         a_mode = false
         tcount = 0
     }
-    s_mode = false
-    while (search_var.firstChild) {
-        search_var.removeChild(search_var.firstChild);
-    }
-    like_btn.style.animation = 'none'
-    const req = new XMLHttpRequest()
-    
-    req.open('POST', '/api', true)
-    let body = {
-      q: "teachers"
-    }
-    body = JSON.stringify(body)
-    req.setRequestHeader('Content-Type', 'application/json')
-    req.send(body)
-    
-    req.onload = () => {
-        teachers = JSON.parse(req.response)
-        if (tcount >= teachers.length) {
-            renderTeacher('all')
-        } else {
-            teacher = teachers[tcount]
-            tcount++
-            renderTeacher(teacher)
+    if (localStorage.getItem('h_mode') == null) {
+        search_error.innerHTML = ' '
+        likes = 0
+        tphoto.style.backgroundImage = "url('img/hellophoto.png')"
+        tname.innerHTML = 'Привет!'
+        tjob.innerHTML = 'Поставь лайк любимому учителю и узнай, кто из учителей сейчас в топе!'
+        tlikes.innerHTML = ''
+        like_btn.style.opacity = '0'
+        change_btn.innerHTML = 'Начать'
+        localStorage.setItem('h_mode', 'true')
+    } else {
+        change_btn.innerHTML = 'Следующий'
+        like_btn.style.opacity = '1'
+        s_mode = false
+        while (search_var.firstChild) {
+            search_var.removeChild(search_var.firstChild);
+        }
+        like_btn.style.animation = 'none'
+        const req = new XMLHttpRequest()
+        
+        req.open('POST', '/api', true)
+        let body = {
+            q: "teachers"
+        }
+        body = JSON.stringify(body)
+        req.setRequestHeader('Content-Type', 'application/json')
+        req.send(body)
+        
+        req.onload = () => {
+            teachers = JSON.parse(req.response)
+            if (tcount >= teachers.length) {
+                renderTeacher('all')
+            } else {
+                tcount = JSON.parse(localStorage.getItem('tcount'))
+                teacher = teachers[tcount]
+                tcount++
+                localStorage.setItem('tcount', tcount)
+                renderTeacher(teacher)
+            }
         }
     }
 }

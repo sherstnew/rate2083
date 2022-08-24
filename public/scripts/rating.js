@@ -4,6 +4,10 @@ let rating = []
 let counter = 0
 let likes
 
+tcount = JSON.parse(localStorage.getItem('tcount'))
+tcount--
+localStorage.setItem('tcount', tcount)
+
 const renderList = () => {
     rating_list.innerHTML = ''
     counter = 0
