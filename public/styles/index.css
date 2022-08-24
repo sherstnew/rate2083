@@ -196,7 +196,7 @@ a {
   width: 200px;
   height: 75px;
   border-radius: 10px;
-  background: #f8f9fa;
+  background: #f4f5f5;
   font-size: 25px;
   color: #000;
   transition: 1s;
@@ -293,4 +293,7 @@ a {
     .footer {
         font-size: 10px;
     }
+    .change-btn:hover {
+      background: #f4f5f5;
+    }  
 }
