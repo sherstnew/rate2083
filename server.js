@@ -20,20 +20,29 @@ app.get('/rating', (req, res) => {
     res.sendFile('/home/runner/rate2083/public/pages/rating.html')
 })
 app.post('/api', (req, res) => {
-    q = req.body.q
-    if (q == 'teachers') {
-        getTeachers(res)
-    } else if (q == 'like') {
-        let name = req.body.name
-        let likes = req.body.likes
-        let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name = "' + name + '"'
-        sequelize.query(update, {logging: false});
-        res.send('ok')
-    } else if (q == 'rating') {
-        sortTeachers(res)
-    } else if (q == 'search') {
-        let select = 'SELECT * FROM teachers WHERE name LIKE "%' + req.body.sq + '%"'
-        searchTeacher(res, select)
+    if (req.headers.origin != undefined) {
+      try {
+        q = req.body.q
+        if (q == 'teachers') {
+            getTeachers(res)
+        } else if (q == 'like') {
+            let name = req.body.name
+            let likes = req.body.likes
+            let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name = "' + name + '"'
+            sequelize.query(update, {logging: false});
+            res.send('ok')
+        } else if (q == 'rating') {
+            sortTeachers(res)
+        } else if (q == 'search') {
+            let select = 'SELECT * FROM teachers WHERE name LIKE "%' + req.body.sq + '%"'
+            searchTeacher(res, select)
+        }
+      } catch (err) {
+        res.send('error')
+        console.log(err)
+      }
+    } else {
+      res.send('access denied :)')
     }
 })
 

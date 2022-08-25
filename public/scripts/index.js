@@ -36,7 +36,7 @@ const change = () => {
         likes = 0
         tphoto.style.backgroundImage = "url('img/hellophoto.png')"
         tname.innerHTML = 'Привет!'
-        tjob.innerHTML = 'Поставь лайк любимому учителю и узнай, кто из учителей сейчас в топе!'
+        tjob.innerHTML = 'Поставь лайк любимому учителю и узнай, кто в топе!'
         tlikes.innerHTML = ''
         like_btn.style.opacity = '0'
         change_btn.innerHTML = 'Начать'
