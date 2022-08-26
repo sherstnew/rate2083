@@ -1,5 +1,6 @@
 const { Sequelize, QueryTypes } = require('sequelize');
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
 const sequelize = new Sequelize({
@@ -10,6 +11,9 @@ let sel = []
 
 app.use(express.json())
 app.use(express.static('public'))
+app.use(cors({
+    origin: 'https://2083.ga'
+}));
 
 // routes
 
@@ -20,7 +24,7 @@ app.get('/rating', (req, res) => {
     res.sendFile('/home/runner/rate2083/public/pages/rating.html')
 })
 app.post('/api', (req, res) => {
-    if (req.headers.origin != undefined) {
+    if (req.header('origin') != undefined) {
       try {
         q = req.body.q
         if (q == 'teachers') {
