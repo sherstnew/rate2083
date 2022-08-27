@@ -10,9 +10,6 @@
   "name": "rate2083",
   "version": "1.0.0",
   "main": "server.js",
-  "scripts": {
-    "start": "npm install sqlite3 & node server.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sherstnew/rate2083.git"
