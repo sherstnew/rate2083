@@ -1,7 +1,10 @@
 const { Sequelize, QueryTypes } = require('sequelize');
 const express = require('express')
 const cors = require('cors')
+const Client = require('ftp')
+const fs = require('fs')
 
+const c = new Client()
 const app = express()
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -28,13 +31,13 @@ app.post('/api', (req, res) => {
       try {
         q = req.body.q
         if (q == 'teachers') {
-            getTeachers(res)
+            getTeachers(res)            
         } else if (q == 'like') {
             let name = req.body.name
-            let likes = req.body.likes
-            let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name = "' + name + '"'
-            sequelize.query(update, {logging: false});
-            res.send('ok')
+            likeTeacher(res, name)
+        } else if (q == 'dislike'){
+            let name = req.body.name
+            dislikeTeacher(res, name)
         } else if (q == 'rating') {
             sortTeachers(res)
         } else if (q == 'search') {
@@ -62,4 +65,23 @@ const searchTeacher = async (res, select) => {
     sel = await sequelize.query(select, { type: QueryTypes.SELECT, logging: false })
     res.send(JSON.stringify(sel));
 }
+const likeTeacher = async (res, name) => {
+    let select = 'SELECT likes FROM teachers WHERE name="' + name + '"' 
+    let likes = await sequelize.query(select, { type: QueryTypes.SELECT, logging: false })
+    likes = likes[0].likes
+    likes++
+    let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name = "' + name + '"'
+    await sequelize.query(update, {logging: false});
+    res.send('ok')
+}
+const dislikeTeacher = async (res, name) => {
+    let select = 'SELECT likes FROM teachers WHERE name="' + name + '"' 
+    let likes = await sequelize.query(select, { type: QueryTypes.SELECT, logging: false })
+    likes = likes[0].likes
+    likes--
+    let update = 'UPDATE teachers SET likes=' + likes + ' WHERE name = "' + name + '"'
+    await sequelize.query(update, {logging: false});
+    res.send('ok')
+}
+
 app.listen(2083)

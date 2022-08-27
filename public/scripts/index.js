@@ -26,10 +26,11 @@ if (localStorage.getItem('tcount') == null) {
 }
 
 const change = () => {
-    if (a_mode) {
+    if (a_mode == true) {
         change_btn.innerHTML = 'Следующий'
         a_mode = false
         tcount = 0
+        localStorage.setItem('tcount', tcount)
     }
     if (localStorage.getItem('h_mode') == null) {
         search_error.innerHTML = ' '
@@ -153,16 +154,14 @@ const f_search = () => {
 
 like_btn.addEventListener('click', () => {
     if (localStorage.getItem(teacher.name) != 'true' && a_mode == false) {
-        likes += 1
+        likes++
         const req_like = new XMLHttpRequest()
         req_like.open('POST', '/api', true)
         let body = {
         name: "",
-        likes: 0,
         q: "like"
         }
         body.name = teacher.name
-        body.likes = likes
         body = JSON.stringify(body)
         req_like.setRequestHeader('Content-Type', 'application/json')
         req_like.send(body)
@@ -177,16 +176,14 @@ like_btn.addEventListener('click', () => {
             setTimeout(f_search, 500)
         }
     } else if (localStorage.getItem(teacher.name) == 'true' && a_mode == false){
-        likes -= 1
+        likes--
         const req_like = new XMLHttpRequest()
         req_like.open('POST', '/api', true)
         let body = {
         name: "",
-        likes: 0,
-        q: "like"
+        q: "dislike"
         }
         body.name = teacher.name
-        body.likes = likes
         body = JSON.stringify(body)
         req_like.setRequestHeader('Content-Type', 'application/json')
         req_like.send(body)
@@ -207,8 +204,17 @@ search_btn.addEventListener('click', f_search)
 
 const renderTeacher = (teacher) => {
 
-    if (teacher != 'all') {
-
+    if (teacher == 'all' || teacher == undefined) {
+        like_btn.style.color = 'black'
+        a_mode = true
+        search_error.innerHTML = ' '
+        likes = 0
+        tphoto.style.backgroundImage = "url('img/allphoto.png')"
+        tname.innerHTML = 'Все!'
+        tjob.innerHTML = 'Вы просмотрели всех учителей, спасибо!'
+        change_btn.innerHTML = 'Заново'
+        tlikes.innerHTML = 0
+        } else {
         if (localStorage.getItem(teacher.name) == 'true') {
             like_btn.style.color = '#e63946'
         } else {
@@ -221,15 +227,5 @@ const renderTeacher = (teacher) => {
         tname.innerHTML = teacher.name
         tjob.innerHTML = teacher.job
         tlikes.innerHTML = teacher.likes
-
-    } else {
-        a_mode = true
-        search_error.innerHTML = ' '
-        likes = 0
-        tphoto.style.backgroundImage = "url('img/allphoto.png')"
-        tname.innerHTML = 'Все!'
-        tjob.innerHTML = 'Вы просмотрели всех учителей, спасибо!'
-        change_btn.innerHTML = 'Заново'
-        tlikes.innerHTML = 0
     }
 }
