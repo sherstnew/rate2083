@@ -10,6 +10,9 @@
   "name": "rate2083",
   "version": "1.0.0",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sherstnew/rate2083.git"
