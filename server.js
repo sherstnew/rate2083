@@ -1,10 +1,7 @@
 const { Sequelize, QueryTypes } = require('sequelize');
 const express = require('express')
 const cors = require('cors')
-const Client = require('ftp')
-const fs = require('fs')
 
-const c = new Client()
 const app = express()
 const sequelize = new Sequelize({
   dialect: 'sqlite',
