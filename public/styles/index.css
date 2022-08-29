@@ -218,7 +218,9 @@ a {
 .foot-alert {
     color: #adb5bd;
 }
-
+.foot-mail {
+    color: #adb5bd;
+}
 @media screen and (max-width: 1200px){
     body {
         overflow-y: scroll;
