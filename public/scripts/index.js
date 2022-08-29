@@ -153,15 +153,19 @@ const f_search = () => {
 }
 
 like_btn.addEventListener('click', () => {
+    const token = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2)
     if (localStorage.getItem(teacher.name) != 'true' && a_mode == false) {
+        document.cookie = 's_t=' + token
         likes++
         const req_like = new XMLHttpRequest()
         req_like.open('POST', '/api', true)
         let body = {
         name: "",
+        token: "",
         q: "like"
         }
         body.name = teacher.name
+        body.token = token
         body = JSON.stringify(body)
         req_like.setRequestHeader('Content-Type', 'application/json')
         req_like.send(body)
@@ -176,14 +180,17 @@ like_btn.addEventListener('click', () => {
             setTimeout(f_search, 500)
         }
     } else if (localStorage.getItem(teacher.name) == 'true' && a_mode == false){
+        document.cookie = 's_t=' + token
         likes--
         const req_like = new XMLHttpRequest()
         req_like.open('POST', '/api', true)
         let body = {
         name: "",
+        token: "",
         q: "dislike"
         }
         body.name = teacher.name
+        body.token = token
         body = JSON.stringify(body)
         req_like.setRequestHeader('Content-Type', 'application/json')
         req_like.send(body)

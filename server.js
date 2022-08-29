@@ -1,6 +1,7 @@
 const { Sequelize, QueryTypes } = require('sequelize');
 const express = require('express')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const sequelize = new Sequelize({
@@ -14,6 +15,7 @@ app.use(express.static('public'))
 app.use(cors({
     origin: 'https://2083.ga'
 }));
+app.use(cookieParser())
 
 // routes
 
@@ -24,23 +26,33 @@ app.get('/rating', (req, res) => {
     res.sendFile('/home/runner/rate2083/public/pages/rating.html')
 })
 app.post('/api', (req, res) => {
+    const token = req.cookies.s_t
     if (req.header('origin') != undefined) {
       try {
         q = req.body.q
         if (q == 'teachers') {
             getTeachers(res)            
         } else if (q == 'like') {
-            let name = req.body.name
-            likeTeacher(res, name)
+            if (token == req.body.token && token != undefined) {
+                let name = req.body.name
+                likeTeacher(res, name)
+            } else {
+                res.send('no token')
+            }
         } else if (q == 'dislike'){
-            let name = req.body.name
-            dislikeTeacher(res, name)
+            if (token == req.body.token && token != undefined) {
+                let name = req.body.name
+                dislikeTeacher(res, name)
+            } else {
+                res.send('no token')
+            }
         } else if (q == 'rating') {
             sortTeachers(res)
         } else if (q == 'search') {
             let select = 'SELECT * FROM teachers WHERE name LIKE "%' + req.body.sq + '%"'
             searchTeacher(res, select)
         }
+        res.cookie('s_t', '')
       } catch (err) {
         res.send('error')
         console.log(err)
