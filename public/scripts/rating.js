@@ -1,12 +1,9 @@
 const rating_list = document.querySelector('.rating-list')
+const cntr = document.querySelector('.counter')
 const req = new XMLHttpRequest()
 let rating = []
 let counter = 0
 let likes
-
-tcount = JSON.parse(localStorage.getItem('tcount'))
-tcount--
-localStorage.setItem('tcount', tcount)
 
 const renderList = () => {
     rating_list.innerHTML = ''
@@ -43,18 +40,20 @@ const renderList = () => {
         // like handler
 
             like_btn.addEventListener('click', () => {
+              const token = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2)
                 if (localStorage.getItem(el.name) != 'true') {
+                    document.cookie = 's_t=' + token
                     likes = el.likes
                     likes += 1
                     const req_like = new XMLHttpRequest()
                     req_like.open('POST', '/api', true)
                     let body = {
                         name: "",
-                        likes: 0,
+                        token: "",
                         q: "like"
                     }
                     body.name = el.name
-                    body.likes = likes
+                    body.token = token
                     body = JSON.stringify(body)
                     req_like.setRequestHeader('Content-Type', 'application/json')
                     req_like.send(body)
@@ -66,17 +65,18 @@ const renderList = () => {
                     localStorage.setItem(el.name, 'true')
                     setTimeout(renderList, 500)
                 } else if (localStorage.getItem(el.name) == 'true'){
+                    document.cookie = 's_t=' + token
                     likes = el.likes
                     likes -= 1
                     const req_like = new XMLHttpRequest()
                     req_like.open('POST', '/api', true)
                     let body = {
                         name: "",
-                        likes: 0,
-                        q: "like"
+                        token: "",
+                        q: "dislike"
                     }
                     body.name = el.name
-                    body.likes = likes
+                    body.token = token
                     body = JSON.stringify(body)
                     req_like.setRequestHeader('Content-Type', 'application/json')
                     req_like.send(body)
